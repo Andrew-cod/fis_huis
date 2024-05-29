@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proiectfis2.HelloController">
+  <TextField fx:id="usernameField" layoutX="14.0" layoutY="14.0" promptText="Username" />
+  <TextField fx:id="passwordField" layoutX="14.0" layoutY="54.0" promptText="Password" />
+  <Button fx:id="loginButton" layoutX="14.0" layoutY="94.0" mnemonicParsing="false" onAction="#handleLogin" text="Login" />
+
+  <!-- Spaced out buttons -->
+  <Button fx:id="addButton" layoutX="14.0" layoutY="144.0" mnemonicParsing="false" onAction="#handleAddProduct" text="Add Product" />
+  <Button fx:id="addPromoButton" layoutX="14.0" layoutY="194.0" mnemonicParsing="false" onAction="#handleAddPromotion" text="Add Promotion" />
+  <Button fx:id="removePromoButton" layoutX="14.0" layoutY="244.0" mnemonicParsing="false" onAction="#handleRemovePromotion" text="Delete Promotion" />
+  <Button fx:id="addToCartButton" layoutX="14.0" layoutY="294.0" mnemonicParsing="false" onAction="#handleAddToCart" text="Add to cart" />
+  <Button fx:id="removeFromCartButton" layoutX="14.0" layoutY="344.0" mnemonicParsing="false" onAction="#handleRemoveFromCart" text="Delete From Cart" />
+  <Button fx:id="placeOrderButton" layoutX="14.0" layoutY="394.0" mnemonicParsing="false" onAction="#handlePlaceOrder" text="Order" />
+  <Button fx:id="addEmployeeButton" layoutX="14.0" layoutY="494.0" mnemonicParsing="false" onAction="#handleAddEmployee" text="Add New User" />
+  <Button fx:id="viewEmployeesButton" layoutX="14.0" layoutY="544.0" mnemonicParsing="false" onAction="#handleViewEmployees" text="All Users" />
+
+  <Label layoutX="517.0" layoutY="-1.0" text="Produse" />
+  <ListView fx:id="productList" layoutX="230.0" layoutY="20.0" prefHeight="349.0" prefWidth="635.0" />
+
+  <Label layoutX="667.0" layoutY="372.0" text="Cos cumparaturi" />
+  <ListView fx:id="cartList" layoutX="594.0" layoutY="401.0" prefHeight="300.0" prefWidth="270.0" />
+
+  <Label layoutX="330.0" layoutY="372.0" text="Comenzi date" />
+  <ListView fx:id="orderList" layoutX="234.0" layoutY="401.0" prefHeight="300.0" prefWidth="269.0" />
+</AnchorPane>
