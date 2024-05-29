@@ -9,4 +9,10 @@
     "password": "password2",
     "name": "Alex"
   }
+,
+  {
+    "username": "user",
+    "password": "user",
+    "name": "user"
+  }
 ]

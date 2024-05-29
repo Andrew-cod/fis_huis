@@ -31,7 +31,7 @@ public class OrderCell extends ListCell<Order> {
             StringBuilder productsStringBuilder = new StringBuilder("Produse:\n");
             for (Product product : order.getProducts()) {
                 productsStringBuilder.append(" - ").append(product.getName())
-                        .append(" (Preet: ").append(product.getPrice())
+                        .append(" (Pret: ").append(product.getPrice())
                         .append(", Descriere: ").append(product.getDescription()).append(")\n");
             }
             productsLabel.setText(productsStringBuilder.toString());

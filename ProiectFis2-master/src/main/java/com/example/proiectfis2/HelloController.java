@@ -29,7 +29,7 @@ public class HelloController {
     private TextField passwordField;
 
     @FXML
-    private Button loginButton, addButton, addPromoButton, removePromoButton, addToCartButton, removeFromCartButton, placeOrderButton, addEmployeeButton, viewEmployeesButton, removeProductButton;
+    private Button loginButton, addButton, addPromoButton, removePromoButton, addToCartButton, removeFromCartButton, placeOrderButton, addEmployeeButton, viewEmployeesButton, removeProductButton, changeStatusButton;
 
     private DatabaseManager databaseManager = new DatabaseManager();
     private Employee currentEmployee;
@@ -107,7 +107,7 @@ public class HelloController {
         } else if (databaseManager.authenticateEmployee(username, password)) {
             // Autentificare angajat
             currentEmployee = databaseManager.getEmployee(username);
-            showAlert(Alert.AlertType.INFORMATION,"Log In","Bine ai venit!","Seller-ul este:: " + currentEmployee.getUsername());
+            showAlert(Alert.AlertType.INFORMATION,"Log In","Bine ai venit!","Rolul tau este: " + currentEmployee.getUsername());
             switch (currentEmployee.getRole()) {
                 case "admin":
                     setButtonAccess(false, false, false, false, false, false, true, true, true, true,false);
@@ -144,7 +144,7 @@ public class HelloController {
             nameDialog.setContentText("Nume:");
             Optional<String> resultName = nameDialog.showAndWait();
             if (!resultName.isPresent()) {
-                showAlert(Alert.AlertType.ERROR, "Adaugare produs", "Numele produsuli nu a fost dat", "Va rugam introduceti un nume pentru produs");
+                showAlert(Alert.AlertType.ERROR, "Adaugare produs", "Numele produsului nu a fost dat", "Va rugam introduceti un nume pentru produs");
                 return;
             }
 
@@ -160,7 +160,7 @@ public class HelloController {
 
             TextInputDialog descriptionDialog = new TextInputDialog();
             descriptionDialog.setTitle("Adaugare produs");
-            descriptionDialog.setHeaderText("Introduceti descrierea produslui");
+            descriptionDialog.setHeaderText("Introduceti descrierea produsului");
             descriptionDialog.setContentText("Descriere:");
             Optional<String> resultDescription = descriptionDialog.showAndWait();
             if (!resultDescription.isPresent()) {
@@ -179,14 +179,12 @@ public class HelloController {
                 updateProductListView();
                 showAlert(Alert.AlertType.INFORMATION, "Adaugare produse", "Produs adaugat", "Product added: " + product.getName());
             } catch (NumberFormatException e) {
-                showAlert(Alert.AlertType.ERROR, "Adaugare produse", "Formatul pretului este gresit", "Introduceti un pret valid(Ex:1000.0)");
+                showAlert(Alert.AlertType.ERROR, "Adaugare produse", "Formatul pretului este gresit", "Introduceti un pret valid(ex:1000.0)");
             }
         } else {
             showAlert(Alert.AlertType.ERROR, "Adaugare produse", "Lipsa permisiuni", "Trebuie sa fiti seller pentru a putea adauga produse!");
         }
     }
-
-
 
 
     @FXML
@@ -199,7 +197,7 @@ public class HelloController {
             productDialog.setContentText("Produs:");
             Optional<Product> resultProduct = productDialog.showAndWait();
             if (!resultProduct.isPresent()) {
-                showAlert(Alert.AlertType.ERROR, "Adaugarea promotie", "Nici-un produs selectat", "Va rugam selectati un produs");
+                showAlert(Alert.AlertType.ERROR, "Adaugarea promotie", "Nici un produs selectat", "Va rugam selectati un produs");
                 return;
             }
 
@@ -220,13 +218,13 @@ public class HelloController {
             updateProductListView();
             showAlert(Alert.AlertType.INFORMATION, "Adaugarea promotie", "Promotie adaugata", "Promotia a fost adauga produslui: " + selectedProduct.getName());
         } else {
-            showAlert(Alert.AlertType.ERROR, "Adaugarea promotie", "Lipsa permisiuni", "Trebuie sa fiti admin pentru a adauga/sterge promotii");
+            showAlert(Alert.AlertType.ERROR, "Adaugarea promotie", "Lipsa permisiuni", "Trebuie sa fiti seller pentru a adauga/sterge promotii");
         }
     }
 
     @FXML
     private void handleRemovePromotion(ActionEvent event) {
-        if (currentEmployee != null && "admin".equals(currentEmployee.getRole())) {
+        if (currentEmployee != null && "seller".equals(currentEmployee.getRole())) {
             List<Promotion> promotions = databaseManager.getPromotions();
             ChoiceDialog<Promotion> promoDialog = new ChoiceDialog<>(promotions.get(0), promotions);
             promoDialog.setTitle("Stergere promotie");
@@ -235,7 +233,7 @@ public class HelloController {
 
             Optional<Promotion> resultPromotion = promoDialog.showAndWait();
             if (!resultPromotion.isPresent()) {
-                showAlert(Alert.AlertType.ERROR, "Stergere promotii", "Nici-o promotie selectata", "Va rugam selectati o promotie");
+                showAlert(Alert.AlertType.ERROR, "Stergere promotii", "Nici o promotie selectata", "Va rugam selectati o promotie");
                 return;
             }
 
@@ -244,7 +242,7 @@ public class HelloController {
             updateProductListView();
             showAlert(Alert.AlertType.INFORMATION, "Stergere promotii", "Promotie stearsa", "Promotie stearsa: " + selectedPromotion.getName());
         } else {
-            showAlert(Alert.AlertType.ERROR, "Stergere promotii", "Lipsa permisiuni", "Trebuie sa fiti admin pentru a putea adauga/sterge promotii");
+            showAlert(Alert.AlertType.ERROR, "Stergere promotii", "Lipsa permisiuni", "Trebuie sa fiti seller pentru a putea adauga/sterge promotii");
         }
     }
 
@@ -260,7 +258,7 @@ public class HelloController {
 
             showAlert(Alert.AlertType.INFORMATION, "Adauga in cos", "Produs adaugat in cos", "Produs adaugat: ");
         } else {
-            showAlert(Alert.AlertType.ERROR, "Adauga in cos", "Nici-un produs selectat", "Va rugam selectati produsul pe care dortii sa il adaugati.");
+            showAlert(Alert.AlertType.ERROR, "Adauga in cos", "Nici un produs selectat", "Va rugam selectati produsul pe care doriti sa il adaugati.");
         }
     }
 
@@ -284,7 +282,7 @@ public class HelloController {
             updateCartListView();
             showAlert(Alert.AlertType.INFORMATION, "Adauga in cos", "Produs adaugat in cos", "Produs adaugat: " + productToAdd.getName());
         } else {
-            showAlert(Alert.AlertType.ERROR, "Adauga in cos", "Nici-un produs selectat", "Va rugam selectati produsul pe care dortii sa il adaugati.");
+            showAlert(Alert.AlertType.ERROR, "Adauga in cos", "Nici un produs selectat", "Va rugam selectati produsul pe care doriti sa il adaugati.");
         }
     }
 
@@ -296,7 +294,7 @@ public class HelloController {
             updateCartListView();
             showAlert(Alert.AlertType.INFORMATION, "Stergere din cos", "Produs sters din cos", "Produs sters: " + selectedProduct.getName());
         } else {
-            showAlert(Alert.AlertType.ERROR, "Stergere din cos", "Nici-un produs selectat", "Va rugam selectati produsul pe care doriti sa-l stergeti.");
+            showAlert(Alert.AlertType.ERROR, "Stergere din cos", "Nici un produs selectat", "Va rugam selectati produsul pe care doriti sa-l stergeti.");
         }
     }
 
@@ -343,16 +341,16 @@ public class HelloController {
             statusDialog.setContentText("Status:");
             Optional<String> resultStatus = statusDialog.showAndWait();
             if (!resultStatus.isPresent()) {
-                showAlert(Alert.AlertType.ERROR, "Schimba status comanda", "Nici-un status nu a fost selectat", "Va rugam selectati un nou status pentru comanda");
+                showAlert(Alert.AlertType.ERROR, "Schimba status comanda", "Nici un status nu a fost selectat", "Va rugam selectati un nou status pentru comanda");
                 return;
             }
 
             String newStatus = resultStatus.get();
             selectedOrder.setStatus(newStatus);
             updateOrderListView();
-            showAlert(Alert.AlertType.INFORMATION, "Schimba status comanda", "Status comanda schimbat", "Status-ul comenzii a fost schimbat: " + newStatus);
+            showAlert(Alert.AlertType.INFORMATION, "Schimba status comanda", "Status comanda schimbat", "Statusul comenzii a fost schimbat: " + newStatus);
         } else {
-            showAlert(Alert.AlertType.ERROR, "Schimba status comanda", "Nici-o comanda selectata", "Va rugam selectati o comanda pentru a schimba statusul.");
+            showAlert(Alert.AlertType.ERROR, "Schimba status comanda", "Nici o comanda selectata", "Va rugam selectati o comanda pentru a schimba statusul.");
         }
     }
 
@@ -360,32 +358,32 @@ public class HelloController {
     private void handleAddEmployee(ActionEvent event) {
         if (currentEmployee != null && "admin".equals(currentEmployee.getRole())) {
             TextInputDialog usernameDialog = new TextInputDialog();
-            usernameDialog.setTitle("Adaugarea angajati");
-            usernameDialog.setHeaderText("Nume angajat");
+            usernameDialog.setTitle("Adaugarea seller");
+            usernameDialog.setHeaderText("Nume seller");
             usernameDialog.setContentText("Username:");
             Optional<String> resultUsername = usernameDialog.showAndWait();
             if (!resultUsername.isPresent()) {
-                showAlert(Alert.AlertType.ERROR, "Adaugare angajat", "Nume anagajat invalid", "Va rugam introduceti un nume pentru noul angajat");
+                showAlert(Alert.AlertType.ERROR, "Adaugare seller", "Nume seller invalid", "Va rugam introduceti un nume pentru noul seller.");
                 return;
             }
 
             TextInputDialog passwordDialog = new TextInputDialog();
-            passwordDialog.setTitle("Adaugare angajat");
-            passwordDialog.setHeaderText("Parola angajat");
-            passwordDialog.setContentText("Password:");
+            passwordDialog.setTitle("Adaugare seller");
+            passwordDialog.setHeaderText("Parola seller");
+            passwordDialog.setContentText("Parola:");
             Optional<String> resultPassword = passwordDialog.showAndWait();
             if (!resultPassword.isPresent()) {
-                showAlert(Alert.AlertType.ERROR, "Adaugare angajat", "Parola angajat invalida", "Va rugam introduceti o parola pentru noul angajat");
+                showAlert(Alert.AlertType.ERROR, "Adaugare seller", "Parola seller invalida", "Va rugam introduceti o parola pentru noul seller.");
                 return;
             }
 
-            ChoiceDialog<String> roleDialog = new ChoiceDialog<>("junior", "junior", "senior");
-            roleDialog.setTitle("Adaugare angajat");
-            roleDialog.setHeaderText("Rol angajat");
+            ChoiceDialog<String> roleDialog = new ChoiceDialog<>("user", "user", "seller");
+            roleDialog.setTitle("Adaugare seller");
+            roleDialog.setHeaderText("Rol seller");
             roleDialog.setContentText("Rol:");
             Optional<String> resultRole = roleDialog.showAndWait();
             if (!resultRole.isPresent()) {
-                showAlert(Alert.AlertType.ERROR, "Adaugare angajat", "Rol angajat invalid", "Va rugam selectati un rol pentru angajat");
+                showAlert(Alert.AlertType.ERROR, "Adaugare seller", "Rol seller invalid", "Va rugam selectati un rol pentru seller.");
                 return;
             }
 
@@ -395,9 +393,9 @@ public class HelloController {
 
             Employee employee = new Employee(username, password, role);
             databaseManager.addEmployee(employee); // This method saves the employees list to JSON
-            showAlert(Alert.AlertType.INFORMATION, "Adaugare angajat", "Angajat adaugat", "Angajat adaugat: " + username);
+            showAlert(Alert.AlertType.INFORMATION, "Adaugare seller", "Angajat seller", "Angajat seller: " + username);
         } else {
-            showAlert(Alert.AlertType.ERROR, "Adaugare angajat", "Lipsa permisiuni", "Trebuie sa fiti logat ca admin pentru a adauga noi vanzatorii");
+            showAlert(Alert.AlertType.ERROR, "Adaugare seller", "Lipsa permisiuni", "Trebuie sa fiti logat ca admin pentru a adauga noi vanzatori.");
         }
     }
 
@@ -432,14 +430,14 @@ public class HelloController {
     private void handleViewEmployees(ActionEvent event) {
         if (currentEmployee != null && "admin".equals(currentEmployee.getRole())) {
             List<Employee> employees = databaseManager.getEmployees();
-            StringBuilder employeeInfo = new StringBuilder("Angajati:\n");
+            StringBuilder employeeInfo = new StringBuilder("Selleri:\n");
             for (Employee employee : employees) {
                 if(employee.getRole().equals("seller"))
                     employeeInfo.append("Username: ").append(employee.getUsername()).append(", Rol: ").append(employee.getRole()).append("\n");
             }
-            showAlert(Alert.AlertType.INFORMATION, "Vizualizare angajati", "Informatii angajati", employeeInfo.toString());
+            showAlert(Alert.AlertType.INFORMATION, "Vizualizare selleri", "Informatii selleri", employeeInfo.toString());
         } else {
-            showAlert(Alert.AlertType.ERROR, "Vizualizare angajati", "Permisiuni invalide", "Doar managerii pot sa vada lista de angajati");
+            showAlert(Alert.AlertType.ERROR, "Vizualizare selleri", "Permisiuni invalide", "Doar adminii pot sa vada lista de selleri.");
         }
     }
 
@@ -452,7 +450,7 @@ public class HelloController {
             descriptionDialog.setContentText("Desciere:");
             Optional<String> resultDescription = descriptionDialog.showAndWait();
             if (!resultDescription.isPresent()) {
-                showAlert(Alert.AlertType.ERROR, "Cerere service", "Descrierea invalida", "Va rugam introduceti o scurta descriere a problemei");
+                showAlert(Alert.AlertType.ERROR, "Cerere service", "Descrierea invalida", "Va rugam introduceti o scurta descriere a problemei.");
                 return;
             }
 
@@ -462,7 +460,7 @@ public class HelloController {
             dateDialog.setContentText("Data:");
             Optional<String> resultDate = dateDialog.showAndWait();
             if (!resultDate.isPresent()) {
-                showAlert(Alert.AlertType.ERROR, "Cerere service", "Data service invalida", "Va rugam introducetii o data pentru preluare in service");
+                showAlert(Alert.AlertType.ERROR, "Cerere service", "Data service invalida", "Va rugam introduceti o data pentru preluare in service.");
                 return;
             }
 
