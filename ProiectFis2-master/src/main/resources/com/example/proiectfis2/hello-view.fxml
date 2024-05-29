@@ -17,7 +17,7 @@
   <Button fx:id="placeOrderButton" layoutX="14.0" layoutY="394.0" mnemonicParsing="false" onAction="#handlePlaceOrder" text="Order" />
   <Button fx:id="addEmployeeButton" layoutX="14.0" layoutY="494.0" mnemonicParsing="false" onAction="#handleAddEmployee" text="Add New User" />
   <Button fx:id="viewEmployeesButton" layoutX="14.0" layoutY="544.0" mnemonicParsing="false" onAction="#handleViewEmployees" text="All Users" />
-
+  <Button fx:id="removeProductButton" layoutX="14.0" layoutY="594.0" mnemonicParsing="false" onAction="#handleRemoveProduct" text="RemoveProduct" />
   <Label layoutX="517.0" layoutY="-1.0" text="Produse" />
   <ListView fx:id="productList" layoutX="230.0" layoutY="20.0" prefHeight="349.0" prefWidth="635.0" />
 

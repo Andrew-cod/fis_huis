@@ -29,7 +29,7 @@ public class HelloController {
     private TextField passwordField;
 
     @FXML
-    private Button loginButton, addButton, addPromoButton, removePromoButton, addToCartButton, removeFromCartButton, placeOrderButton, addEmployeeButton, viewEmployeesButton;
+    private Button loginButton, addButton, addPromoButton, removePromoButton, addToCartButton, removeFromCartButton, placeOrderButton, addEmployeeButton, viewEmployeesButton, removeProductButton;
 
     private DatabaseManager databaseManager = new DatabaseManager();
     private Employee currentEmployee;
@@ -49,7 +49,7 @@ public class HelloController {
         updateCartListView();
 
         //setam  accesul la butoane cand pornim aplicatie. initial sunt toate false adic off.
-        setButtonAccess(false, false, false, false, false, false, false, false, false, false);
+        setButtonAccess(false, false, false, false, false, false, false, false, false, false,false);
     }
 
     private void updateProductListView() {
@@ -66,7 +66,7 @@ public class HelloController {
         cartList.setItems(FXCollections.observableArrayList(cart));
     }
 
-    private void setButtonAccess(boolean addProduct, boolean addPromo, boolean removePromo, boolean addToCart, boolean removeFromCart, boolean placeOrder, boolean changeStatus, boolean addEmployee, boolean viewEmployees, boolean removeCompleted) {
+    private void setButtonAccess(boolean addProduct, boolean addPromo, boolean removePromo, boolean addToCart, boolean removeFromCart, boolean placeOrder, boolean changeStatus, boolean addEmployee, boolean viewEmployees, boolean removeCompleted, boolean removeProduct) {
         addButton.setVisible(addProduct);
         addPromoButton.setVisible(addPromo);
         removePromoButton.setVisible(removePromo);
@@ -75,6 +75,7 @@ public class HelloController {
         placeOrderButton.setVisible(placeOrder);
         addEmployeeButton.setVisible(addEmployee);
         viewEmployeesButton.setVisible(viewEmployees);
+        removeProductButton.setVisible(removeProduct);
 
         //pentru a seta limitele la listview.
         orderList.setVisible(addEmployee || changeStatus || removeCompleted);
@@ -102,25 +103,25 @@ public class HelloController {
         if (databaseManager.authenticateCustomer(username, password)) {
             currentCustomer = databaseManager.getCustomer(username);
             showAlert(Alert.AlertType.INFORMATION,"Log In","Bine ai venit!","Cont client: " + username);
-            setButtonAccess(false, false, false, true, true, true, false, false, false, false);
+            setButtonAccess(false, false, false, true, true, true, false, false, false, false,false);
         } else if (databaseManager.authenticateEmployee(username, password)) {
             // Autentificare angajat
             currentEmployee = databaseManager.getEmployee(username);
             showAlert(Alert.AlertType.INFORMATION,"Log In","Bine ai venit!","Seller-ul este:: " + currentEmployee.getUsername());
             switch (currentEmployee.getRole()) {
                 case "admin":
-                    setButtonAccess(false, false, false, false, false, false, true, true, true, true);
+                    setButtonAccess(false, false, false, false, false, false, true, true, true, true,false);
                     break;
                 case "seller":
-                    setButtonAccess(true, true, true, false, false, false, true, false, false, true);
+                    setButtonAccess(true, true, true, false, false, false, true, false, false, true,true);
                     break;
                 case "user":
-                    setButtonAccess(false, false, false, true, true, true, true, false, false, true);
+                    setButtonAccess(false, false, false, true, true, true, true, false, false, true,false);
                     break;
             }
         } else {
             showAlert(Alert.AlertType.ERROR, "Eroare autentificare", "Date invalide", "Email sau parola gresita!");
-            setButtonAccess(false, false, false, false, false, false, false, false, false, false);
+            setButtonAccess(false, false, false, false, false, false, false, false, false, false,false);
         }
     }
 
@@ -185,6 +186,9 @@ public class HelloController {
         }
     }
 
+
+
+
     @FXML
     private void handleAddPromotion(ActionEvent event) {
         if (currentEmployee != null && "seller".equals(currentEmployee.getRole())) {
@@ -241,6 +245,22 @@ public class HelloController {
             showAlert(Alert.AlertType.INFORMATION, "Stergere promotii", "Promotie stearsa", "Promotie stearsa: " + selectedPromotion.getName());
         } else {
             showAlert(Alert.AlertType.ERROR, "Stergere promotii", "Lipsa permisiuni", "Trebuie sa fiti admin pentru a putea adauga/sterge promotii");
+        }
+    }
+
+    //asta e a mea
+    @FXML
+    private void handleRemoveProduct(ActionEvent event) {
+        Product selectedProduct = productList.getSelectionModel().getSelectedItem();
+        if (selectedProduct != null) {
+            List<Product> Products = databaseManager.getProducts();
+
+            databaseManager.removeProduct(selectedProduct,  currentEmployee);
+            updateProductListView();
+
+            showAlert(Alert.AlertType.INFORMATION, "Adauga in cos", "Produs adaugat in cos", "Produs adaugat: ");
+        } else {
+            showAlert(Alert.AlertType.ERROR, "Adauga in cos", "Nici-un produs selectat", "Va rugam selectati produsul pe care dortii sa il adaugati.");
         }
     }
 

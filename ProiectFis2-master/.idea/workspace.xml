@@ -4,14 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="23731e2c-a6b8-4dca-bd1f-3a1e1f4f7b75" name="Changes" comment="">
+    <list default="true" id="23731e2c-a6b8-4dca-bd1f-3a1e1f4f7b75" name="Changes" comment="salvari relative">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/proiectfis2/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/proiectfis2/Category.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/proiectfis2/DatabaseManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/proiectfis2/DatabaseManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/proiectfis2/HelloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/proiectfis2/HelloController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/proiectfis2/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/proiectfis2/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/proiectfis2/TestNagyGabriel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/proiectfis2/TestNagyGabriel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/proiectfis2/products.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/proiectfis2/products.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/proiectfis2/promotions.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/proiectfis2/promotions.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/proiectfis2/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/proiectfis2/hello-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,8 +117,17 @@
       <workItem from="1716490065501" duration="3323000" />
       <workItem from="1716564360696" duration="6439000" />
       <workItem from="1717012467086" duration="1888000" />
-      <workItem from="1717015221944" duration="2944000" />
+      <workItem from="1717015221944" duration="5350000" />
     </task>
+    <task id="LOCAL-00001" summary="salvari relative">
+      <option name="closed" value="true" />
+      <created>1717018180197</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1717018180198</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -137,6 +143,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="salvari relative" />
+    <option name="LAST_COMMIT_MESSAGE" value="salvari relative" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ProiectFis2_master$App.ic" NAME="App Coverage Results" MODIFIED="1717012543924" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">

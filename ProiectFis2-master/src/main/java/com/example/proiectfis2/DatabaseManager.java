@@ -186,6 +186,15 @@ public class DatabaseManager {
         }
     }
 
+    public void removeProduct(Product product, Employee employee){
+        if (employee != null && employee.getRole().equals("seller")) {
+            products.remove(product);
+            saveProducts();
+        } else {
+            System.out.println("Doar angajații seniori pot sterge produse.");
+        }
+    }
+
     public List<Product> getProducts() {
         return products;
     }
