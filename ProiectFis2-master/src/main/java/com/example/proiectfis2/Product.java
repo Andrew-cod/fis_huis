@@ -6,7 +6,7 @@ public class Product {
     private double price;
     private String description;
     private int rating;
-    private boolean isPart;
+    private boolean isPart;//negociabil
 
     public Product(String name, Category category, double price, String description, int rating, boolean isPart) {
         this.name = name;

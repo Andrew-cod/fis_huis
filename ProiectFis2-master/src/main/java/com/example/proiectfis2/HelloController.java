@@ -47,7 +47,8 @@ public class HelloController {
         updateProductListView();
         updateOrderListView();
         updateCartListView();
-       //setam  accesul la butoane cand pornim aplicatie. initial sunt toate false adic off.
+
+        //setam  accesul la butoane cand pornim aplicatie. initial sunt toate false adic off.
         setButtonAccess(false, false, false, false, false, false, false, false, false, false);
     }
 
@@ -75,7 +76,7 @@ public class HelloController {
         addEmployeeButton.setVisible(addEmployee);
         viewEmployeesButton.setVisible(viewEmployees);
 
-      //pentru a seta limitele la listview.
+        //pentru a seta limitele la listview.
         orderList.setVisible(addEmployee || changeStatus || removeCompleted);
     }
 
@@ -105,20 +106,20 @@ public class HelloController {
         } else if (databaseManager.authenticateEmployee(username, password)) {
             // Autentificare angajat
             currentEmployee = databaseManager.getEmployee(username);
-            showAlert(Alert.AlertType.INFORMATION,"Log In","Bine ai venit!","Angajatul este:: " + currentEmployee.getUsername());
+            showAlert(Alert.AlertType.INFORMATION,"Log In","Bine ai venit!","Seller-ul este:: " + currentEmployee.getUsername());
             switch (currentEmployee.getRole()) {
                 case "admin":
-                    setButtonAccess(false, false, false, true, true, true, false, true, true, true);
+                    setButtonAccess(false, false, false, false, false, false, true, true, true, true);
                     break;
                 case "seller":
-                    setButtonAccess(true, true, true, true, true, true, true, false, false, true);
+                    setButtonAccess(true, true, true, false, false, false, true, false, false, true);
                     break;
                 case "user":
                     setButtonAccess(false, false, false, true, true, true, true, false, false, true);
                     break;
             }
         } else {
-            showAlert(Alert.AlertType.ERROR, "Eroare autentificare", "Date invalide", "Username sau parola gresita!");
+            showAlert(Alert.AlertType.ERROR, "Eroare autentificare", "Date invalide", "Email sau parola gresita!");
             setButtonAccess(false, false, false, false, false, false, false, false, false, false);
         }
     }
@@ -126,7 +127,7 @@ public class HelloController {
     @FXML
     private void handleAddProduct(ActionEvent event) {
         if (currentEmployee != null && "seller".equals(currentEmployee.getRole())) {
-            ChoiceDialog<Category> categoryDialog = new ChoiceDialog<>(Category.DESKTOP_PC, Category.values());
+            ChoiceDialog<Category> categoryDialog = new ChoiceDialog<>(Category.TELEFON, Category.values());
             categoryDialog.setTitle("Adaugare produs");
             categoryDialog.setHeaderText("Alegeti categoria din care face parte produsul");
             categoryDialog.setContentText("Categorie:");
@@ -172,7 +173,7 @@ public class HelloController {
                 double price = Double.parseDouble(resultPrice.get());
                 String description = resultDescription.get();
 
-                Product product = new Product(name, category, price, description, 4, category == Category.COMPONENTE_PRE);
+                Product product = new Product(name, category, price, description, 4, category == Category.CASTI);
                 databaseManager.addProduct(product, currentEmployee); //salvam produsele in json.
                 updateProductListView();
                 showAlert(Alert.AlertType.INFORMATION, "Adaugare produse", "Produs adaugat", "Product added: " + product.getName());
@@ -180,7 +181,7 @@ public class HelloController {
                 showAlert(Alert.AlertType.ERROR, "Adaugare produse", "Formatul pretului este gresit", "Introduceti un pret valid(Ex:1000.0)");
             }
         } else {
-            showAlert(Alert.AlertType.ERROR, "Adaugare produse", "Lipsa permisiuni", "Trebuie sa fiti angajat senior pentru a putea adauga produse!");
+            showAlert(Alert.AlertType.ERROR, "Adaugare produse", "Lipsa permisiuni", "Trebuie sa fiti seller pentru a putea adauga produse!");
         }
     }
 
@@ -215,13 +216,13 @@ public class HelloController {
             updateProductListView();
             showAlert(Alert.AlertType.INFORMATION, "Adaugarea promotie", "Promotie adaugata", "Promotia a fost adauga produslui: " + selectedProduct.getName());
         } else {
-            showAlert(Alert.AlertType.ERROR, "Adaugarea promotie", "Lipsa permisiuni", "Trebuie sa fiti manager pentru a adauga/sterge promotii");
+            showAlert(Alert.AlertType.ERROR, "Adaugarea promotie", "Lipsa permisiuni", "Trebuie sa fiti admin pentru a adauga/sterge promotii");
         }
     }
 
     @FXML
     private void handleRemovePromotion(ActionEvent event) {
-        if (currentEmployee != null && "seller".equals(currentEmployee.getRole())) {
+        if (currentEmployee != null && "admin".equals(currentEmployee.getRole())) {
             List<Promotion> promotions = databaseManager.getPromotions();
             ChoiceDialog<Promotion> promoDialog = new ChoiceDialog<>(promotions.get(0), promotions);
             promoDialog.setTitle("Stergere promotie");
@@ -239,7 +240,7 @@ public class HelloController {
             updateProductListView();
             showAlert(Alert.AlertType.INFORMATION, "Stergere promotii", "Promotie stearsa", "Promotie stearsa: " + selectedPromotion.getName());
         } else {
-            showAlert(Alert.AlertType.ERROR, "Stergere promotii", "Lipsa permisiuni", "Trebuie sa fiti manager pentru a putea adauga/sterge promotii");
+            showAlert(Alert.AlertType.ERROR, "Stergere promotii", "Lipsa permisiuni", "Trebuie sa fiti admin pentru a putea adauga/sterge promotii");
         }
     }
 
@@ -288,7 +289,7 @@ public class HelloController {
 
                 for (Product product : cart) {
                     totalPrice += product.getPrice();
-                    if (product.getCategory() == Category.COMPONENTE_PRE) {
+                    if (product.getCategory() == Category.CEAS) {
                         hasPreAssembledParts = true;
                     }
                 }
@@ -308,7 +309,7 @@ public class HelloController {
                 showAlert(Alert.AlertType.ERROR, "Plasati comanda", "Cosul este gol", "Va rugam adaugati produse in cos pentru a putea plasa o comanda");
             }
         } else {
-            showAlert(Alert.AlertType.ERROR, "Plasati comanda", "Lipsa permisiuni", "Trebuie sa fiti logat ca si client pentru a trimite o comanda");
+            showAlert(Alert.AlertType.ERROR, "Plasati comanda", "Lipsa permisiuni", "Trebuie sa fiti logat ca si user pentru a trimite o comanda");
         }
     }
 
@@ -358,7 +359,7 @@ public class HelloController {
                 return;
             }
 
-            ChoiceDialog<String> roleDialog = new ChoiceDialog<>( "seller");
+            ChoiceDialog<String> roleDialog = new ChoiceDialog<>("junior", "junior", "senior");
             roleDialog.setTitle("Adaugare angajat");
             roleDialog.setHeaderText("Rol angajat");
             roleDialog.setContentText("Rol:");
@@ -376,17 +377,17 @@ public class HelloController {
             databaseManager.addEmployee(employee); // This method saves the employees list to JSON
             showAlert(Alert.AlertType.INFORMATION, "Adaugare angajat", "Angajat adaugat", "Angajat adaugat: " + username);
         } else {
-            showAlert(Alert.AlertType.ERROR, "Adaugare angajat", "Lipsa permisiuni", "Trebuie sa fiti logat ca manager pentru a adauga noi angajati");
+            showAlert(Alert.AlertType.ERROR, "Adaugare angajat", "Lipsa permisiuni", "Trebuie sa fiti logat ca admin pentru a adauga noi vanzatorii");
         }
     }
 
     @FXML
     private void handleRemoveCompleted(ActionEvent event) {
         if (currentEmployee != null) {
-            if ("manager".equals(currentEmployee.getRole()) || "seller".equals(currentEmployee.getRole()) || "user".equals(currentEmployee.getRole())) {
+            if ("admin".equals(currentEmployee.getRole()) || "seller".equals(currentEmployee.getRole()) || "user".equals(currentEmployee.getRole())) {
                 ObservableList<Order> items = orderList.getItems();
 
-               //stergem comenziile terminate sau care au fost anulate
+                //stergem comenziile terminate sau care au fost anulate
                 List<Order> completedOrCanceledOrders = items.stream()
                         .filter(order -> order.getStatus().equals("Completed") || order.getStatus().equals("Cancelled"))
                         .collect(Collectors.toList());
@@ -413,7 +414,8 @@ public class HelloController {
             List<Employee> employees = databaseManager.getEmployees();
             StringBuilder employeeInfo = new StringBuilder("Angajati:\n");
             for (Employee employee : employees) {
-                employeeInfo.append("Username: ").append(employee.getUsername()).append(", Rol: ").append(employee.getRole()).append("\n");
+                if(employee.getRole().equals("seller"))
+                    employeeInfo.append("Username: ").append(employee.getUsername()).append(", Rol: ").append(employee.getRole()).append("\n");
             }
             showAlert(Alert.AlertType.INFORMATION, "Vizualizare angajati", "Informatii angajati", employeeInfo.toString());
         } else {
@@ -444,8 +446,8 @@ public class HelloController {
                 return;
             }
 
-            String description = resultDescription.get();
-            String date = resultDate.get();
+        } else {
+            showAlert(Alert.AlertType.ERROR, "Cerere service", "Permisiuni invalide", "Trebuie sa aveti cont de client pentru trimiterea unei cerere service!");
         }
     }
 }

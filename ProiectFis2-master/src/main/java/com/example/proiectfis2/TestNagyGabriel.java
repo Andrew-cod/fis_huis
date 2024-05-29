@@ -20,8 +20,8 @@ class TestNagyGabriel {
         databaseManager = new DatabaseManager();
         seniorEmployee = new Employee("seniorUser", "password", "senior");
         juniorEmployee = new Employee("juniorUser", "password", "junior");
-        validProduct = new Product("Test produs", Category.DESKTOP_PC, 1000.0, "Test descriere", 5, false);
-        anotherProduct = new Product("Alt produs", Category.LAPTOP_PC, 1500.0, "Alta descriere", 3, false);
+        validProduct = new Product("Test produs", Category.TELEFON, 1000.0, "Test descriere", 5, false);
+        anotherProduct = new Product("Alt produs", Category.LAPTOP, 1500.0, "Alta descriere", 3, false);
         validCustomer = new Customer("TestClient", "password123", "Test Client ", "Test@example.com");
         validOrder = new Order(validCustomer, Collections.singletonList(validProduct), "Pending");
     }

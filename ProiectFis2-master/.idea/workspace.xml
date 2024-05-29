@@ -5,12 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="23731e2c-a6b8-4dca-bd1f-3a1e1f4f7b75" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/proiectfis2/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/proiectfis2/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/proiectfis2/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/proiectfis2/Category.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/proiectfis2/HelloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/proiectfis2/HelloController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/proiectfis2/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/proiectfis2/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/proiectfis2/TestNagyGabriel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/proiectfis2/TestNagyGabriel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/proiectfis2/products.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/proiectfis2/products.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/proiectfis2/promotions.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/proiectfis2/promotions.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,15 +26,15 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "Andrew-cod"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Andrew-cod&quot;
   }
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
-    "url": "https://github.com/Mdisomchik/Furat_Resurse.git",
+    "url": "https://github.com/Andrew-cod/fis_huis.git",
     "accountId": "57eb12b3-7722-4612-8bfa-edb513c02e07"
   }
 }]]></component>
@@ -61,10 +62,10 @@
     "JUnit.Test_NagyGabriel.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/arapu/proiect/ProiectFis2-master",
+    "last_opened_file_path": "C:/Users/arapu/Desktop/p/ProiectFis2-master",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -119,11 +120,23 @@
       <workItem from="1716490065501" duration="3323000" />
       <workItem from="1716564360696" duration="6439000" />
       <workItem from="1717012467086" duration="1888000" />
+      <workItem from="1717015221944" duration="2944000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ProiectFis2_master$App.ic" NAME="App Coverage Results" MODIFIED="1717012543924" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
