@@ -5,7 +5,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,7 @@ import java.util.stream.Collectors;
 
 import static java.lang.String.*;
 
-public class HelloController {
+public class StartPageManager {
     @FXML
     private ListView<Product> productList;
 
@@ -33,7 +32,7 @@ public class HelloController {
     @FXML
     private Button loginButton, addButton, addPromoButton, removePromoButton, addToCartButton, removeFromCartButton, placeOrderButton, addEmployeeButton, viewEmployeesButton, removeProductButton, changeStatusButton;
 
-    private DatabaseManager databaseManager = new DatabaseManager();
+    private DBmanager DBmanager = new DBmanager();
     private Employee currentEmployee;
     private Customer currentCustomer;
     private List<Product> cart = new ArrayList<>();
@@ -55,12 +54,12 @@ public class HelloController {
     }
 
     private void updateProductListView() {
-        List<Product> products = databaseManager.getProducts();
+        List<Product> products = DBmanager.getProducts();
         productList.setItems(FXCollections.observableArrayList(products));
     }
 
     private void updateOrderListView() {
-        List<Order> orders = databaseManager.getOrders();
+        List<Order> orders = DBmanager.getOrders();
         orderList.setItems(FXCollections.observableArrayList(orders));
     }
 
@@ -78,6 +77,7 @@ public class HelloController {
         viewEmployeesButton.setVisible(viewEmployees);
         removeProductButton.setVisible(removeProduct);
         addPromoButton.setVisible(addPromo);
+        changeStatusButton.setVisible(changeStatus);
 
         //pentru a seta limitele la listview.
         orderList.setVisible(addEmployee || changeStatus || removeCompleted);
@@ -102,13 +102,13 @@ public class HelloController {
         currentCustomer = null;
 
         // Autentificare client
-        if (databaseManager.authenticateCustomer(username, password)) {
-            currentCustomer = databaseManager.getCustomer(username);
+        if (DBmanager.authenticateCustomer(username, password)) {
+            currentCustomer = DBmanager.getCustomer(username);
             showAlert(Alert.AlertType.INFORMATION,"Log In","Bine ai venit!","Cont client: " + username);
             setButtonAccess(false, false, false, true, true, true, false, false, false, false,false);
-        } else if (databaseManager.authenticateEmployee(username, password)) {
+        } else if (DBmanager.authenticateEmployee(username, password)) {
             // Autentificare angajat
-            currentEmployee = databaseManager.getEmployee(username);
+            currentEmployee = DBmanager.getEmployee(username);
             showAlert(Alert.AlertType.INFORMATION,"Log In","Bine ai venit!","Rolul tau este: " + currentEmployee.getUsername());
             switch (currentEmployee.getRole()) {
                 case "admin":
@@ -178,7 +178,7 @@ public class HelloController {
                 String description = resultDescription.get();
 
                 Product product = new Product(name, category, price, description, 4, false);
-                databaseManager.addProduct(product, currentEmployee); //salvam produsele in json.
+                DBmanager.addProduct(product, currentEmployee); //salvam produsele in json.
                 updateProductListView();
                 showAlert(Alert.AlertType.INFORMATION, "Adaugare produse", "Produs adaugat", "Product added: " + product.getName());
             } catch (NumberFormatException e) {
@@ -251,7 +251,7 @@ public class HelloController {
                 boolean negociabil = resultNogociabilDialog.isPresent();
 
                 Product product = new Product(name, category, price, description, 4, negociabil);
-                databaseManager.addProduct(product, currentEmployee); //salvam produsele in json.
+                DBmanager.addProduct(product, currentEmployee); //salvam produsele in json.
                 updateProductListView();
                 showAlert(Alert.AlertType.INFORMATION, "Adaugare produse", "Produs adaugat", "Product added: " + product.getName());
             } catch (NumberFormatException e) {
@@ -265,22 +265,22 @@ public class HelloController {
     @FXML
     private void handleRemovePromotion(ActionEvent event) {
         if (currentEmployee != null && "seller".equals(currentEmployee.getRole())) {
-            List<Promotion> promotions = databaseManager.getPromotions();
-            ChoiceDialog<Promotion> promoDialog = new ChoiceDialog<>(promotions.get(0), promotions);
+            List<Negociere> negocieres = DBmanager.getPromotions();
+            ChoiceDialog<Negociere> promoDialog = new ChoiceDialog<>(negocieres.get(0), negocieres);
             promoDialog.setTitle("Stergere promotie");
             promoDialog.setHeaderText("Selectati promotia pe care doriti sa o stergeti");
             promoDialog.setContentText("Promotii:");
 
-            Optional<Promotion> resultPromotion = promoDialog.showAndWait();
+            Optional<Negociere> resultPromotion = promoDialog.showAndWait();
             if (!resultPromotion.isPresent()) {
                 showAlert(Alert.AlertType.ERROR, "Stergere promotii", "Nici o promotie selectata", "Va rugam selectati o promotie");
                 return;
             }
 
-            Promotion selectedPromotion = resultPromotion.get();
-            databaseManager.removePromotion(selectedPromotion, currentEmployee);
+            Negociere selectedNegociere = resultPromotion.get();
+            DBmanager.removePromotion(selectedNegociere, currentEmployee);
             updateProductListView();
-            showAlert(Alert.AlertType.INFORMATION, "Stergere promotii", "Promotie stearsa", "Promotie stearsa: " + selectedPromotion.getName());
+            showAlert(Alert.AlertType.INFORMATION, "Stergere promotii", "Promotie stearsa", "Promotie stearsa: " + selectedNegociere.getName());
         } else {
             showAlert(Alert.AlertType.ERROR, "Stergere promotii", "Lipsa permisiuni", "Trebuie sa fiti seller pentru a putea adauga/sterge promotii");
         }
@@ -291,9 +291,9 @@ public class HelloController {
     private void handleRemoveProduct(ActionEvent event) {
         Product selectedProduct = productList.getSelectionModel().getSelectedItem();
         if (selectedProduct != null) {
-            List<Product> Products = databaseManager.getProducts();
+            List<Product> Products = DBmanager.getProducts();
 
-            databaseManager.removeProduct(selectedProduct,  currentEmployee);
+            DBmanager.removeProduct(selectedProduct,  currentEmployee);
             updateProductListView();
 
             showAlert(Alert.AlertType.INFORMATION, "Adauga in cos", "Produs adaugat in cos", "Produs adaugat: ");
@@ -392,7 +392,7 @@ public class HelloController {
                 cart.clear();
                 updateCartListView();
                 Order order = new Order(currentCustomer, orderProducts, "Pending");
-                databaseManager.placeOrder(order); // This method saves the orders list to JSON
+                DBmanager.placeOrder(order); // This method saves the orders list to JSON
                 updateOrderListView();
                 showAlert(Alert.AlertType.INFORMATION, "Plasati comanda", "Comanda plasata", "Comanda plasata. Pret total: " + totalPrice);
             } else {
@@ -464,7 +464,7 @@ public class HelloController {
             String role = resultRole.get();
 
             Employee employee = new Employee(username, password, role);
-            databaseManager.addEmployee(employee); // This method saves the employees list to JSON
+            DBmanager.addEmployee(employee); // This method saves the employees list to JSON
             showAlert(Alert.AlertType.INFORMATION, "Adaugare seller", "Angajat seller", "Angajat seller: " + username);
         } else {
             showAlert(Alert.AlertType.ERROR, "Adaugare seller", "Lipsa permisiuni", "Trebuie sa fiti logat ca admin pentru a adauga noi vanzatori.");
@@ -487,7 +487,7 @@ public class HelloController {
                 orderList.setItems(items);
 
                 //updatam in baza de date.
-                databaseManager.updateOrders(items);
+                DBmanager.updateOrders(items);
 
                 showAlert(Alert.AlertType.INFORMATION, "Comenzi sterse", "Comenziile terminate sau anulate au fost sterse", "Stergere cu succes");
             } else {
@@ -501,7 +501,7 @@ public class HelloController {
     @FXML
     private void handleViewEmployees(ActionEvent event) {
         if (currentEmployee != null && "admin".equals(currentEmployee.getRole())) {
-            List<Employee> employees = databaseManager.getEmployees();
+            List<Employee> employees = DBmanager.getEmployees();
             StringBuilder employeeInfo = new StringBuilder("Selleri:\n");
             for (Employee employee : employees) {
                 if(employee.getRole().equals("seller"))

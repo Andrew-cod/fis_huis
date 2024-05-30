@@ -35,7 +35,7 @@ public class ProductCell extends ListCell<Product> {
             else
                 priceLabel.setText("Pret: " + product.getPrice());
             descriptionLabel.setText("Descriere: " + product.getDescription());
-            ratingLabel.setText("nu o sa fie");
+            ratingLabel.setText(" ");
             setGraphic(vbox);
         }
     }

@@ -2,12 +2,12 @@ package com.example.proiectfis2;
 
 import java.util.List;
 
-class Promotion {
+class Negociere {
     private String name;
     private List<Product> products;
     private double discountPercent;
 
-    public Promotion(String name, List<Product> products, double discountPercent) {
+    public Negociere(String name, List<Product> products, double discountPercent) {
         this.name = name;
         this.products = products;
         this.discountPercent = discountPercent;

@@ -10,12 +10,12 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DatabaseManager {
+public class DBmanager {
     private List<Customer> customers;
     private List<Employee> employees;
     private List<Product> products;
     private List<Order> orders;
-    private List<Promotion> promotions;
+    private List<Negociere> negocieres;
 
     private static final String CUSTOMERS_FILE = "src/main/resources/com/example/proiectfis2/customers.json";
     private static final String EMPLOYEES_FILE = "src/main/resources/com/example/proiectfis2/employees.json";
@@ -25,12 +25,12 @@ public class DatabaseManager {
 
     private Gson gson = new Gson();
 
-    public DatabaseManager() {
+    public DBmanager() {
         this.customers = loadCustomers();
         this.employees = loadEmployees();
         this.products = loadProducts();
         this.orders = loadOrders();
-        this.promotions = loadPromotions();
+        this.negocieres = loadPromotions();
     }
 
     // Load methods...
@@ -75,9 +75,9 @@ public class DatabaseManager {
         }
     }
 
-    private List<Promotion> loadPromotions() {
+    private List<Negociere> loadPromotions() {
         try (InputStreamReader reader = new InputStreamReader(getClass().getResourceAsStream("/com/example/proiectfis2/promotions.json"))) {
-            Type promotionListType = new TypeToken<ArrayList<Promotion>>() {}.getType();
+            Type promotionListType = new TypeToken<ArrayList<Negociere>>() {}.getType();
             return gson.fromJson(reader, promotionListType);
         } catch (IOException e) {
             e.printStackTrace();
@@ -120,7 +120,7 @@ public class DatabaseManager {
 
     private void savePromotions() {
         try (FileWriter writer = new FileWriter(PROMOTIONS_FILE)) {
-            gson.toJson(promotions, writer);
+            gson.toJson(negocieres, writer);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -182,7 +182,7 @@ public class DatabaseManager {
             products.add(product);
             saveProducts();
         } else {
-            System.out.println("Doar angajații seniori pot adăuga produse.");
+            System.out.println("Doar sellerii pot adăuga produse.");
         }
     }
 
@@ -191,7 +191,7 @@ public class DatabaseManager {
             products.remove(product);
             saveProducts();
         } else {
-            System.out.println("Doar angajații seniori pot sterge produse.");
+            System.out.println("Doar sellerii pot sterge produse.");
         }
     }
 
@@ -213,10 +213,10 @@ public class DatabaseManager {
         return orders;
     }
 
-    public void addPromotion(Promotion promotion, Employee employee) {
+    public void addPromotion(Negociere negociere, Employee employee) {
         if (employee != null && employee.getRole().equals("seller")) {
-            promotions.add(promotion);
-            for (Product product : promotion.getProducts()) {
+            negocieres.add(negociere);
+            for (Product product : negociere.getProducts()) {
                 if (!products.contains(product)) {
                     products.add(product);
                 }
@@ -224,23 +224,23 @@ public class DatabaseManager {
             savePromotions();
             saveProducts();
         } else {
-            System.out.println("Doar managerii pot adăuga promoții noi.");
+            System.out.println("Doar managerii pot sterge negocieri.");
         }
     }
 
-    public void removePromotion(Promotion promotion, Employee employee) {
+    public void removePromotion(Negociere negociere, Employee employee) {
         if (employee != null && employee.getRole().equals("seller")) {
-            promotions.remove(promotion);
+            negocieres.remove(negociere);
             savePromotions();
         } else {
-            System.out.println("Doar managerii pot șterge promoții.");
+            System.out.println("Doar sellerii pot șterge negocieri.");
         }
     }
 
     public double getDiscountForProduct(Product product) {
-        for (Promotion promotion : promotions) {
-            if (promotion.getProducts().contains(product)) {
-                return promotion.getDiscountPercent();
+        for (Negociere negociere : negocieres) {
+            if (negociere.getProducts().contains(product)) {
+                return negociere.getDiscountPercent();
             }
         }
         return 0;
@@ -249,8 +249,8 @@ public class DatabaseManager {
         this.orders = orders;
         saveOrders();
     }
-    public List<Promotion> getPromotions() {
-        return promotions;
+    public List<Negociere> getPromotions() {
+        return negocieres;
     }
 
 }
