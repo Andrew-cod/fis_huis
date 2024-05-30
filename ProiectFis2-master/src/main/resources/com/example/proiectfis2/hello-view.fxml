@@ -6,22 +6,22 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proiectfis2.HelloController">
-  <TextField fx:id="usernameField" layoutX="677.0" layoutY="62.0" prefHeight="34.0" prefWidth="157.0" promptText="Username" />
-  <TextField fx:id="passwordField" layoutX="677.0" layoutY="110.0" prefHeight="34.0" prefWidth="157.0" promptText="Password" />
+<AnchorPane stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proiectfis2.StartPageManager">
+  <TextField fx:id="usernameField" layoutX="677.0" layoutY="62.0" prefHeight="34.0" prefWidth="157.0" promptText="Email" />
+  <TextField fx:id="passwordField" layoutX="677.0" layoutY="110.0" prefHeight="34.0" prefWidth="157.0" promptText="Parola" />
   <Button fx:id="loginButton" layoutX="677.0" layoutY="160.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="42.0" prefWidth="157.0" text="Login" />
 
   <!-- Spaced out buttons -->
-  <Button fx:id="addButton" layoutX="677.0" layoutY="362.0" mnemonicParsing="false" onAction="#handleAddProduct" prefHeight="42.0" prefWidth="157.0" text="Add Product" />
+  <Button fx:id="addButton" layoutX="677.0" layoutY="362.0" mnemonicParsing="false" onAction="#handleAddProduct" prefHeight="42.0" prefWidth="157.0" text="Adauga Produs" />
   <Button fx:id="addPromoButton" layoutX="174.0" layoutY="751.0" mnemonicParsing="false" onAction="#handleAddPromotion" text="Add Promotion" />
   <Button fx:id="removePromoButton" layoutX="14.0" layoutY="751.0" mnemonicParsing="false" onAction="#handleRemovePromotion" prefHeight="42.0" prefWidth="139.0" text="Delete Promotion" />
-  <Button fx:id="addToCartButton" layoutX="677.0" layoutY="481.0" mnemonicParsing="false" onAction="#handleAddToCart" prefHeight="42.0" prefWidth="157.0" text="Add to cart" />
-  <Button fx:id="removeFromCartButton" layoutX="677.0" layoutY="542.0" mnemonicParsing="false" onAction="#handleRemoveFromCart" prefHeight="42.0" prefWidth="157.0" text="Delete From Cart" />
-  <Button fx:id="placeOrderButton" layoutX="677.0" layoutY="657.0" mnemonicParsing="false" onAction="#handlePlaceOrder" prefHeight="42.0" prefWidth="157.0" text="Order" />
-  <Button fx:id="addEmployeeButton" layoutX="677.0" layoutY="245.0" mnemonicParsing="false" onAction="#handleAddEmployee" prefHeight="42.0" prefWidth="157.0" text="Add New User" />
-  <Button fx:id="viewEmployeesButton" layoutX="677.0" layoutY="304.0" mnemonicParsing="false" onAction="#handleViewEmployees" prefHeight="42.0" prefWidth="157.0" text="All Users" />
-  <Button fx:id="removeProductButton" layoutX="677.0" layoutY="422.0" mnemonicParsing="false" onAction="#handleRemoveProduct" prefHeight="42.0" prefWidth="157.0" text="Remove Product" />
-  <Button fx:id="changeStatusButton" layoutX="677.0" layoutY="730.0" mnemonicParsing="false" onAction="#handleOrderStatusChange" prefHeight="42.0" prefWidth="157.0" text="Change Status" />
+  <Button fx:id="addToCartButton" layoutX="677.0" layoutY="481.0" mnemonicParsing="false" onAction="#handleAddToCart" prefHeight="42.0" prefWidth="157.0" text="Adauga in cos" />
+  <Button fx:id="removeFromCartButton" layoutX="677.0" layoutY="542.0" mnemonicParsing="false" onAction="#handleRemoveFromCart" prefHeight="42.0" prefWidth="157.0" text="Sterge din cos" />
+  <Button fx:id="placeOrderButton" layoutX="677.0" layoutY="657.0" mnemonicParsing="false" onAction="#handlePlaceOrder" prefHeight="42.0" prefWidth="157.0" text="Comanda" />
+  <Button fx:id="addEmployeeButton" layoutX="677.0" layoutY="245.0" mnemonicParsing="false" onAction="#handleAddEmployee" prefHeight="42.0" prefWidth="157.0" text="Adauga Vanzator" />
+  <Button fx:id="viewEmployeesButton" layoutX="677.0" layoutY="304.0" mnemonicParsing="false" onAction="#handleViewEmployees" prefHeight="42.0" prefWidth="157.0" text="Vezi toti vanzatorii" />
+  <Button fx:id="removeProductButton" layoutX="677.0" layoutY="422.0" mnemonicParsing="false" onAction="#handleRemoveProduct" prefHeight="42.0" prefWidth="157.0" text="Sterge Produs" />
+  <Button fx:id="changeStatusButton" layoutX="677.0" layoutY="730.0" mnemonicParsing="false" onAction="#handleOrderStatusChange" prefHeight="42.0" prefWidth="157.0" text="Schimba Statusul" />
   <Label layoutX="314.0" layoutY="22.0" text="Produse" />
   <ListView fx:id="productList" layoutX="27.0" layoutY="62.0" prefHeight="349.0" prefWidth="635.0" />
 
