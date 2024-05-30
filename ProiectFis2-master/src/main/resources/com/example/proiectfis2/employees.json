@@ -5,18 +5,13 @@
     "role": "admin"
   },
   {
-    "username": "user",
+    "username": "user@email.com",
     "password": "user",
     "role": "user"
   },
   {
-    "username": "seller",
+    "username": "seller@email.com",
     "password": "seller",
     "role": "seller"
-  },
-  {
-    "username": "maxim",
-    "password": "maxim",
-    "role": "admin"
   }
 ]

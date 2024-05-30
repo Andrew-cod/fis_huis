@@ -6,10 +6,9 @@ import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class TestNagyGabriel {
+class Teste {
     private DatabaseManager databaseManager;
-    private Employee seniorEmployee;
-    private Employee juniorEmployee;
+    private Employee Employee;
     private Product validProduct;
     private Product anotherProduct;
     private Customer validCustomer;
@@ -18,8 +17,8 @@ class TestNagyGabriel {
     @BeforeEach
     void setUp() {
         databaseManager = new DatabaseManager();
-        seniorEmployee = new Employee("seniorUser", "password", "senior");
-        juniorEmployee = new Employee("juniorUser", "password", "junior");
+
+        Employee = new Employee("User", "password", "user");
         validProduct = new Product("Test produs", Category.TELEFON, 1000.0, "Test descriere", 5, false);
         anotherProduct = new Product("Alt produs", Category.LAPTOP, 1500.0, "Alta descriere", 3, false);
         validCustomer = new Customer("TestClient", "password123", "Test Client ", "Test@example.com");
@@ -29,16 +28,16 @@ class TestNagyGabriel {
 
 
     @Test
-    void testAddProductWithJuniorEmployee() {
-        System.out.println("Testul: testAddProductWithJuniorEmployee a inceput");
+    void testAddProductWithUser() {
+        System.out.println("Testul: testAddProductWithUser a inceput");
         int initialSize = databaseManager.getProducts().size();
-        databaseManager.addProduct(validProduct, juniorEmployee);
+        databaseManager.addProduct(validProduct, Employee);
         assertEquals(initialSize, databaseManager.getProducts().size());
         assertFalse(databaseManager.getProducts().contains(validProduct));
     }
 
     @Test
-    void testAddProductWithoutEmployee() {
+    void testAddProductWithoutSeller() {
         System.out.println("Testul: testAddProductWithNullEmployee a inceput");
         int initialSize = databaseManager.getProducts().size();
         databaseManager.addProduct(validProduct, null);

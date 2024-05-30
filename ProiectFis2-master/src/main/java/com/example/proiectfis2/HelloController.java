@@ -115,10 +115,10 @@ public class HelloController {
                     setButtonAccess(false, false, false, false, false, false, true, true, true, true,false);
                     break;
                 case "seller":
-                    setButtonAccess(true, false, true, false, false, false, true, false, false, true,true);
+                    setButtonAccess(true, false, false, false, false, false, true, false, false, true,true);
                     break;
                 case "user":
-                    setButtonAccess(false, false, false, true, true, true, true, false, false, true,false);
+                    setButtonAccess(false, false, false, true, true, true, false, false, false, true,false);
                     break;
             }
         } else {

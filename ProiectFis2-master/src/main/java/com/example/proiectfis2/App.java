@@ -10,7 +10,7 @@ public class    App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
+        Scene scene = new Scene(fxmlLoader.load(), 875, 800);
         stage.setTitle("Magazin Online");
         stage.setScene(scene);
         stage.show();
