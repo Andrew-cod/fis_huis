@@ -4,13 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="23731e2c-a6b8-4dca-bd1f-3a1e1f4f7b75" name="Changes" comment="Am adaugat removeProduct si un button la el">
+    <list default="true" id="23731e2c-a6b8-4dca-bd1f-3a1e1f4f7b75" name="Changes" comment="Am adauga Buttonul de schibare a statutului">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/proiectfis2/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/proiectfis2/Category.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/proiectfis2/HelloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/proiectfis2/HelloController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/proiectfis2/OrderCell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/proiectfis2/OrderCell.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/proiectfis2/customers.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/proiectfis2/customers.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/proiectfis2/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/proiectfis2/hello-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/proiectfis2/ProductCell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/proiectfis2/ProductCell.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/proiectfis2/TestNagyGabriel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/proiectfis2/TestNagyGabriel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/proiectfis2/orders.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/proiectfis2/orders.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/proiectfis2/products.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/proiectfis2/products.json" afterDir="false" />
     </list>
@@ -66,7 +64,7 @@
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/arapu/Desktop/p/ProiectFis2-master",
+    "last_opened_file_path": "C:/Users/arapu/Desktop/p/ProiectFis2-master/src/main/resources/com/example/proiectfis2/hello-view.fxml",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -75,13 +73,14 @@
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
+    "run.code.analysis.last.selected.profile": "pProject Default",
     "settings.editor.selected.configurable": "preferences.lookFeel",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RunManager">
     <configuration name="TestNagyGabriel" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="ProiectFis2-master" />
+      <module name="ProiectFis2" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.example.proiectfis2.*" />
@@ -121,7 +120,7 @@
       <workItem from="1716490065501" duration="3323000" />
       <workItem from="1716564360696" duration="6439000" />
       <workItem from="1717012467086" duration="1888000" />
-      <workItem from="1717015221944" duration="8335000" />
+      <workItem from="1717015221944" duration="14598000" />
     </task>
     <task id="LOCAL-00001" summary="salvari relative">
       <option name="closed" value="true" />
@@ -139,7 +138,15 @@
       <option name="project" value="LOCAL" />
       <updated>1717020759319</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Am adauga Buttonul de schibare a statutului">
+      <option name="closed" value="true" />
+      <created>1717023754079</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1717023754079</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -159,7 +166,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="salvari relative" />
     <MESSAGE value="Am adaugat removeProduct si un button la el" />
-    <option name="LAST_COMMIT_MESSAGE" value="Am adaugat removeProduct si un button la el" />
+    <MESSAGE value="Am adauga Buttonul de schibare a statutului" />
+    <option name="LAST_COMMIT_MESSAGE" value="Am adauga Buttonul de schibare a statutului" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ProiectFis2_master$App.ic" NAME="App Coverage Results" MODIFIED="1717012543924" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">

@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static java.lang.String.*;
+
 public class HelloController {
     @FXML
     private ListView<Product> productList;
@@ -68,7 +70,6 @@ public class HelloController {
 
     private void setButtonAccess(boolean addProduct, boolean addPromo, boolean removePromo, boolean addToCart, boolean removeFromCart, boolean placeOrder, boolean changeStatus, boolean addEmployee, boolean viewEmployees, boolean removeCompleted, boolean removeProduct) {
         addButton.setVisible(addProduct);
-        addPromoButton.setVisible(addPromo);
         removePromoButton.setVisible(removePromo);
         addToCartButton.setVisible(addToCart);
         removeFromCartButton.setVisible(removeFromCart);
@@ -76,6 +77,7 @@ public class HelloController {
         addEmployeeButton.setVisible(addEmployee);
         viewEmployeesButton.setVisible(viewEmployees);
         removeProductButton.setVisible(removeProduct);
+        addPromoButton.setVisible(addPromo);
 
         //pentru a seta limitele la listview.
         orderList.setVisible(addEmployee || changeStatus || removeCompleted);
@@ -113,7 +115,7 @@ public class HelloController {
                     setButtonAccess(false, false, false, false, false, false, true, true, true, true,false);
                     break;
                 case "seller":
-                    setButtonAccess(true, true, true, false, false, false, true, false, false, true,true);
+                    setButtonAccess(true, false, true, false, false, false, true, false, false, true,true);
                     break;
                 case "user":
                     setButtonAccess(false, false, false, true, true, true, true, false, false, true,false);
@@ -128,6 +130,7 @@ public class HelloController {
     @FXML
     private void handleAddProduct(ActionEvent event) {
         if (currentEmployee != null && "seller".equals(currentEmployee.getRole())) {
+
             ChoiceDialog<Category> categoryDialog = new ChoiceDialog<>(Category.TELEFON, Category.values());
             categoryDialog.setTitle("Adaugare produs");
             categoryDialog.setHeaderText("Alegeti categoria din care face parte produsul");
@@ -174,7 +177,7 @@ public class HelloController {
                 double price = Double.parseDouble(resultPrice.get());
                 String description = resultDescription.get();
 
-                Product product = new Product(name, category, price, description, 4, category == Category.CASTI);
+                Product product = new Product(name, category, price, description, 4, false);
                 databaseManager.addProduct(product, currentEmployee); //salvam produsele in json.
                 updateProductListView();
                 showAlert(Alert.AlertType.INFORMATION, "Adaugare produse", "Produs adaugat", "Product added: " + product.getName());
@@ -190,35 +193,72 @@ public class HelloController {
     @FXML
     private void handleAddPromotion(ActionEvent event) {
         if (currentEmployee != null && "seller".equals(currentEmployee.getRole())) {
-            List<Product> products = databaseManager.getProducts();
-            ChoiceDialog<Product> productDialog = new ChoiceDialog<>(products.get(0), products);
-            productDialog.setTitle("Adaugarea promotie");
-            productDialog.setHeaderText("Selectati produsul caruia doriti sa-i adaugati promotie");
-            productDialog.setContentText("Produs:");
-            Optional<Product> resultProduct = productDialog.showAndWait();
-            if (!resultProduct.isPresent()) {
-                showAlert(Alert.AlertType.ERROR, "Adaugarea promotie", "Nici un produs selectat", "Va rugam selectati un produs");
+            ChoiceDialog<Category> categoryDialog = new ChoiceDialog<>(Category.TELEFON, Category.values());
+            categoryDialog.setTitle("Adaugare produs");
+            categoryDialog.setHeaderText("Alegeti tipul");
+            categoryDialog.setContentText("Categorie:");
+            Optional<Category> resultCategory = categoryDialog.showAndWait();
+            if (!resultCategory.isPresent()) {
+                showAlert(Alert.AlertType.ERROR, "Adaugare produs", "Categoria produsul nu a fost selectata", "Va rugam selectati o categorie.");
                 return;
             }
 
             TextInputDialog nameDialog = new TextInputDialog();
-            nameDialog.setTitle("Adaugarea promotie");
-            nameDialog.setHeaderText("Numele promotiei:");
+            nameDialog.setTitle("Adaugare produs");
+            nameDialog.setHeaderText("Introduceti numele produsului");
             nameDialog.setContentText("Nume:");
             Optional<String> resultName = nameDialog.showAndWait();
             if (!resultName.isPresent()) {
-                showAlert(Alert.AlertType.ERROR, "Adaugarea promotie", "Numele promotiei nu a fost dat", "Va rugam introduceti un nume pentru promotie");
+                showAlert(Alert.AlertType.ERROR, "Adaugare produs", "Numele produsului nu a fost dat", "Va rugam introduceti un nume pentru produs");
                 return;
             }
 
-            Product selectedProduct = resultProduct.get();
-            String promotionName = resultName.get();
-            Promotion promotion = new Promotion(promotionName, List.of(selectedProduct), 10.0);
-            databaseManager.addPromotion(promotion, currentEmployee);
-            updateProductListView();
-            showAlert(Alert.AlertType.INFORMATION, "Adaugarea promotie", "Promotie adaugata", "Promotia a fost adauga produslui: " + selectedProduct.getName());
+            TextInputDialog priceDialog = new TextInputDialog();
+            priceDialog.setTitle("Adaugare produs");
+            priceDialog.setHeaderText("Pretul produsului");
+            priceDialog.setContentText("Pret:");
+            Optional<String> resultPrice = priceDialog.showAndWait();
+            if (!resultPrice.isPresent()) {
+                showAlert(Alert.AlertType.ERROR, "Adaugare produs", "Pretul produsului nu a fost dat", "Va rugam introduceti un pret.");
+                return;
+            }
+
+            TextInputDialog descriptionDialog = new TextInputDialog();
+            descriptionDialog.setTitle("Adaugare produs");
+            descriptionDialog.setHeaderText("Introduceti descrierea produsului");
+            descriptionDialog.setContentText("Descriere:");
+            Optional<String> resultDescription = descriptionDialog.showAndWait();
+            if (!resultDescription.isPresent()) {
+                showAlert(Alert.AlertType.ERROR, "Adaugare produs", "Descrierea produsului nu a fost scrisa", "Va rugam introduceti o descriere");
+                return;
+            }
+
+            ChoiceDialog<String> nogociabilDialog = new ChoiceDialog<>("Selecteaza","Negociabil","Pret Fix");
+            categoryDialog.setTitle("Adaugare negociabil");
+            categoryDialog.setHeaderText("Alegeti tipul");
+            categoryDialog.setContentText("Tipul:");
+            Optional<String> resultNogociabilDialog = nogociabilDialog.showAndWait();
+            if (!resultCategory.isPresent()) {
+                showAlert(Alert.AlertType.ERROR, "Adaugare produs", "Categoria produsul nu a fost selectata", "Va rugam selectati o categorie.");
+                return;
+            }
+
+            try {
+                Category category = resultCategory.get();
+                String name = resultName.get();
+                double price = Double.parseDouble(resultPrice.get());
+                String description = resultDescription.get();
+                boolean negociabil = resultNogociabilDialog.isPresent();
+
+                Product product = new Product(name, category, price, description, 4, negociabil);
+                databaseManager.addProduct(product, currentEmployee); //salvam produsele in json.
+                updateProductListView();
+                showAlert(Alert.AlertType.INFORMATION, "Adaugare produse", "Produs adaugat", "Product added: " + product.getName());
+            } catch (NumberFormatException e) {
+                showAlert(Alert.AlertType.ERROR, "Adaugare produse", "Formatul pretului este gresit", "Introduceti un pret valid(ex:1000.0)");
+            }
         } else {
-            showAlert(Alert.AlertType.ERROR, "Adaugarea promotie", "Lipsa permisiuni", "Trebuie sa fiti seller pentru a adauga/sterge promotii");
+            showAlert(Alert.AlertType.ERROR, "Adaugare produse", "Lipsa permisiuni", "Trebuie sa fiti seller pentru a putea adauga produse!");
         }
     }
 
@@ -265,25 +305,57 @@ public class HelloController {
     @FXML
     private void handleAddToCart(ActionEvent event) {
         Product selectedProduct = productList.getSelectionModel().getSelectedItem();
-        if (selectedProduct != null) {
-            double discount = databaseManager.getDiscountForProduct(selectedProduct);
-            double discountedPrice = selectedProduct.getPrice() * (1 - discount / 100);
+            if (selectedProduct != null) {
+                if (selectedProduct.isPart()) {
+                    TextInputDialog priceDialog = new TextInputDialog();
+                    priceDialog.setTitle("Propune un pret");
+                    priceDialog.setHeaderText("Pret Propus:");
+                    priceDialog.setContentText("Pret:");
+                    Optional<String> resultPrice = priceDialog.showAndWait();
+                    if (!resultPrice.isPresent()) {
+                        showAlert(Alert.AlertType.ERROR, "Adaugare produs", "Pretul produsului nu a fost dat", "Va rugam introduceti un pret.");
+                        return;
+                    }
+                    if (selectedProduct.getPrice() < Integer.parseInt(valueOf(resultPrice.get()))) {
 
-            Product productToAdd = new Product(
-                    selectedProduct.getName(),
-                    selectedProduct.getCategory(),
-                    discountedPrice,
-                    selectedProduct.getDescription(),
-                    selectedProduct.getRating(),
-                    selectedProduct.isPart()
-            );
+                        Product productToAdd = new Product(
+                                selectedProduct.getName(),
+                                selectedProduct.getCategory(),
+                                Integer.parseInt(valueOf(resultPrice.get())),
+                                selectedProduct.getDescription(),
+                                selectedProduct.getRating(),
+                                selectedProduct.isPart()
+                        );
 
-            cart.add(productToAdd);
-            updateCartListView();
-            showAlert(Alert.AlertType.INFORMATION, "Adauga in cos", "Produs adaugat in cos", "Produs adaugat: " + productToAdd.getName());
-        } else {
-            showAlert(Alert.AlertType.ERROR, "Adauga in cos", "Nici un produs selectat", "Va rugam selectati produsul pe care doriti sa il adaugati.");
-        }
+                        cart.add(productToAdd);
+                        updateCartListView();
+                        showAlert(Alert.AlertType.INFORMATION, "Adauga in cos", "Produs adaugat in cos", "Produs adaugat: " + productToAdd.getName());
+                    } else {
+                        showAlert(Alert.AlertType.ERROR, "Pret Mic", "Trebuie sa introduceti un pret mai mic", "Pentru a cumpara acest produs trebuie sa propuneti un pret mai mare decat pretul minim dorit de vanzator");
+
+                    }
+
+                } else {
+                    Product productToAdd = new Product(
+                            selectedProduct.getName(),
+                            selectedProduct.getCategory(),
+                            selectedProduct.getPrice(),
+                            selectedProduct.getDescription(),
+                            selectedProduct.getRating(),
+                            selectedProduct.isPart()
+                    );
+
+                    cart.add(productToAdd);
+                    updateCartListView();
+                    showAlert(Alert.AlertType.INFORMATION, "Adauga in cos", "Produs adaugat in cos", "Produs adaugat: " + productToAdd.getName());
+
+                }
+            }else {
+                showAlert(Alert.AlertType.ERROR, "Adauga in cos", "Nici un produs selectat", "Va rugam selectati produsul pe care doriti sa il adaugati.");
+            }
+
+
+
     }
 
     @FXML
