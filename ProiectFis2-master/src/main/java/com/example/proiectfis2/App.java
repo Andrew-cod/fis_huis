@@ -14,7 +14,7 @@ public class    App extends Application {
         stage.setTitle("Magazin Online");
         stage.setScene(scene);
         stage.show();
-        //sasi jopuu max
+
     }
 
     public static void main(String[] args) {
