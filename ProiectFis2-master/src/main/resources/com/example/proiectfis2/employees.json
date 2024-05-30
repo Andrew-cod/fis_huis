@@ -1,17 +1,1 @@
-[
-  {
-    "username": "admin@email.com",
-    "password": "admin",
-    "role": "admin"
-  },
-  {
-    "username": "user@email.com",
-    "password": "user",
-    "role": "user"
-  },
-  {
-    "username": "seller@email.com",
-    "password": "seller",
-    "role": "seller"
-  }
-]
+[{"username":"admin@email.com","password":"admin","role":"admin"},{"username":"user@email.com","password":"user","role":"user"},{"username":"seller@email.com","password":"seller","role":"seller"},{"username":"User","password":"password","role":"user"},{"username":"User","password":"password","role":"user"}]
